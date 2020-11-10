@@ -38,11 +38,10 @@
 <code>curl -X POST http://127.0.0.1:8080/api/v1/results -d ‘{«name»: «Имя″, "department": "Отдел", "room": 101, "callnumber": 155}’ -H «Content-Type:application/json» 
 ##### Удалить запись: 
 <code>curl -X POST http://127.0.0.1:8080/api/v1/results/{id}</code>
-В ответ будет получен статус <code>204 No Content</code>.
+В ответ будет получен статус <code>204 No Content</code>
 ##### Также приложение возвращает значение hostname: 
 <code>curl -X GET http://127.0.0.1:8080/api/v1/status</code>
-В ответ будет получен JSON в виде <code>{hostname: "hostname"}</code>. 
-
+В ответ будет получен JSON в виде <code>{hostname: "hostname"}</code>
 # Лабораторная работа №3: CI/CD и деплой приложения в Heroku
 # Цель работы: 
 ## Целью лабораторной работы является знакомство с CI/CD и его реализацией на примере Travis CI и Heroku.
