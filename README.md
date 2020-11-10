@@ -24,7 +24,7 @@
 Для запуска сборки из консоли потребуется установка Maven и настройка операционной системы. Сборка приложения осуществляется при помощи автоматической системы сборки проектов Maven. 
 Для сборки необходимо выполнить команду mvn package -Dmaven.test.skip=true(с пропуском тестирования) находясь в директории проекта. После окончания выполнения команды появится папка target в которой находится скомпилированный код и файл labaapi-1.0.jar.
 #### Сборка и запуск Docker-образа 
-Для сборки Docker образа следует выполнить команду <code> docker build -t labaapi:latest . </code> находясь в директории с <code>Dockerfile</code> и собранным <code>labaapi-1.0.jar</code> .  
+Для сборки Docker образа следует выполнить команду <code> docker build -t labaapi:latest . </code> находясь в директории с <code>Dockerfile</code> и собранным <code>labaapi-1.0.jar</code>   
 Запуск осуществляется командой <code>docker run -p 8080:8080 labaapi:v1 </code>, в формате {порт внешний}:{порт в Docker}.  
 #### Примеры запросов к labaapi:
 Формат JSON: {name: "string", department: "string ",callnumber: integer, room: integer}
