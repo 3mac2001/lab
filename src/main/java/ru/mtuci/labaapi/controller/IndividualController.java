@@ -10,6 +10,7 @@ import ru.mtuci.labaapi.model.Individual;
 import ru.mtuci.labaapi.service.IndividualService;
 
 import java.util.List;
+javac main.java --class-path;
 
 @Slf4j
 @RestController
