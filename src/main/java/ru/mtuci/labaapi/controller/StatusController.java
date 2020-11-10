@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mtuci.apilab.dto.Status;
+import ru.mtuci.labaapi.dto.Status;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
