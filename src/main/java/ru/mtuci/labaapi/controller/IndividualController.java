@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.mtuci.apilab.model.Individual;
-import ru.mtuci.apilab.service.IndividualService;
+import ru.mtuci.labaapi.model.Individual;
+import ru.mtuci.labaapi.service.IndividualService;
 
 import java.util.List;
 
