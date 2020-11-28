@@ -1,4 +1,4 @@
-  
+  [![Build Status](https://travis-ci.org/3mac2001/lab.svg?branch=master)](https://travis-ci.org/3mac2001/lab)
 dist: trusty
 jdk: oraclejdk8
 language: java
