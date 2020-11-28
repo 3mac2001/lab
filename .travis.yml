@@ -6,6 +6,28 @@ services:
   - docker
 before_install:
 - chmod +x mvnw
+env:
+  global:
+    - secure: "MjGeZUZrF/B5g9VWoChurCPBn8pjBAjnhUnmOLKOfaaQO9PzKIAvdE07VJabOPWHSXiIRy5dNMg7GLJuN824Fyp+wDPMkl9V2dJmBQAiN8rfeOMWtYSWV7Nk9xNZKmltTcgIMeD4DzIcb2lsumRcAe9DtGsEt8ZpzoGzeN6Orw9pS4hnMIX30irlUMC9ncgWxIPLWvyw1oDsrFIS2QLCQjv6xkwyW2FntPMGmg8SQRAxZ62B04wBMBloodTjakubydqyTQFE0P1AHuiZI6vHRGsYLwT1DNI1XuUTJ0JILj94vn8R81lnSso6rZC3uADU86txQrWYxoiMzn/DRibe5ED/zLMn7I6Re+ClA7KEwVGUZIvImnN0iMWrzXmoNg+2W4DGtDwEIThPla+9qfrIGv3R01zKebb+olrizUlhNBsdf86K6zFZeELNbkgAa0cKvejbmk3NY2kKhsG7CE16A1J7UFIjuz2KMtqaYcBknnfekljC/l18kEHIFXpQDt0gz2pHuyfFJi9LpwnCso2aiF6tL1nNXv3a6H3fnVYOxXCzIhkJWV9hpabR80i6uW4gsDUEsJXzuqvWIRmBfB1/dDbxqGxyzPcujzpiNARpdUPeHtcybFCnJ1wwR0V/ENFI2yMoOfItlyU70WtqrtXxPVMYs7YdLSaAOEprmBWQVhM="
+    - secure: "NkpUX2pmgBOEH8NfanzjWf+JcWV7PvLLOBIz2va8TRNUVP30TGetnslLHJdZVQxpX7itMQOkJL0F9k10edV1OVeeZ0MF2WM3Jqi5XR7JiSjVS6KuoXQQMn532Em+/VMcO4+o7s+AvdEgov4p5I5r56jf3hn5264KhbYcpI4LE3AoMVdoG3v2YI+D3mo4uR40cCGEz4LUymjVHQeVIJM8nOlHXBMY1jaMzoE8Rsv4FMr+w0Eqa3CT7wRba8DubuvO4dO92hkaZbuMdJsuOR5vEsiyXNBm3EOWl4Tefaz3s761vN1YDUj36Mo1Lsrp7RH1NiS/jZUqjvK7mQf/MQpsKtyDoxzi5+0ETBcEfqYmrH8ZYj8DGFmtxhKiSR1WwG3e6z6AKfUTt/IMcATrYaXTJwgri9MyEMGMCUARz/PFWVnigssOPQLdEIXzpwlvYbcf+wQDnwBBtf22OUglPbHawOniUzSYrUw49TXBArjiPBbAlMUDBQ0SP5yqt657dK1mioL2+Cq4a5zSEoiNk7Zhjn6QRchMFdsYozAvVJQQzglgPZKYXygCR2ZgrrfNQDu1nczXbMlcTXoe+arvyPJXLj5xKuqBFwi9ZMeAjk+sg+2G10r9S1lfWo6YghI+pzZmGIsDr7daf6mOL9RDQDf2hGajnZEdSTYcHzYJG2Eze/Y="
+    - secure: "IYLNZAZAqYGhlvggJGGDWTCxkXVthZrzCnQqyodcQwkX7najxgWRLKimJU/HqaRgjH3SX0Vp2J7dAGaN1dRfmghXqYW0OziRbjrlyw5X++DeTWlTkekbjZb1m5QyLCdPSHNvdHVVAQM5vZ8CbzXO/JAw0Zp229sgnoHVYRhOa9j64oLzGtk938/UkNXNS8Hho9iPYo4R6SSaXNapX/hBXQ9LPJSxs1O5Rb7xdN3MYI5pC5Kc7raBcpmwGJlzgNl37iOXPU0FWIZc24yCH6fOPk14vh8NHsPZ7Ec/rqZy6NHeZ1OIEB3ohb5a1IJXvUWf4GNb4FtLVKg4Eyj3S4p/iz3PIjdCEHTjs3doiPWvMOPcwwXobY0l1pH1IeiiPtF+mWE5KdSe0CdPJCqaOS7z/CZmVOklg1xKZ+YUXuN/hQhWYCOf+rpxMpBi9kCl2FmIWN47h98UtdHIaxjcMSNl13cbj6SGA5tiUcSfY7ZsEZeTE0fzm1XtEUOkjzJWYYMsgoxqWWEwWCNiG8hGKUTKhoBobntPpkTqMkaRByvVAca/EgjWaNZehEEjJlH++My7xmJ0BL7QfRPcd6vp4V5D4+32pO8xc+pwe+I4FEVwXiH/Wj+HTe7ZEVIztIpBFkRIBk5JbrpN46lcurGENv6M+yVv2PHTJq/IUTSq1PJQTxE="
+    - COMMIT=${TRAVIS_COMMIT::7}
+
+script: mvn clean package -DskipTests=true
+
+
+after_success:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$TRAVIS_BRANCH"; fi`
+    - export IMAGE_NAME=simpleapi/repo-lab2
+    - docker build -t $IMAGE_NAME:latest .
+    - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+    - docker push $IMAGE_NAME:$TAG
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app: labaapi
 
 
 
